@@ -2,9 +2,6 @@ import socket
 import threading
 import os
 
-HOST = "127.0.0.1"
-PORT = 40000
-
 def server_connection(sock):
     while True:
         try:
@@ -14,11 +11,15 @@ def server_connection(sock):
             os._exit(1)
         print(data.decode("utf-8"))
 
+HOST = str(input("Enter server IP: "))
+PORT = int(input("Port: "))
+
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     try:
         s.connect((HOST, PORT))
     except:
         print("Couldn't connect to the server...")
+        os._exit(1)
     try:
         while True:
             action = input("Login/Register: ")

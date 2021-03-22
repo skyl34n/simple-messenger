@@ -3,8 +3,16 @@ import time
 import threading
 import json
 
-HOST = "127.0.0.1"
-PORT = 40000
+HOST = input("IP (default - 127.0.0.1): ")
+PORT = input("Port (default - 40000): ")
+
+if HOST == "":
+    HOST = "127.0.0.1"
+if PORT == "":
+    PORT = 40000
+else:
+    PORT = int(PORT)
+
 
 client_sockets = {}
 user_pairs = {}  # {(user_socket, username): peer_name}
@@ -25,6 +33,8 @@ def connect_client(client_socket, client_address):
                         if not username in accounts:
                             accounts[username] = password
                             client_socket.send("Registration completed".encode("utf-8"))
+                            file.seek(0)
+                            json.dump(accounts, file, indent=4, ensure_ascii=False)
                             continue
                         else:
                             client_socket.send("Account with that username already exists".encode("utf-8"))
