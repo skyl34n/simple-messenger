@@ -11,8 +11,12 @@ def server_connection(sock):
             os._exit(1)
         print(data.decode("utf-8"))
 
-HOST = str(input("Enter server IP: "))
-PORT = int(input("Port: "))
+try:
+    HOST = str(input("Enter server IP: "))
+    PORT = int(input("Port: "))
+except:
+    print("Invalid inputs")
+    os._exit(1)
 
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     try:
